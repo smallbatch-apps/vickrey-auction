@@ -17,9 +17,9 @@ export default function Closed() {
   useEffect(() => {
     setTimeout(() => {
       clearClosed();
-      queryClient.invalidateQueries(["snakes"]);
+      queryClient.invalidateQueries({ queryKey: ["snakes"] });
     }, 5000);
-  }, []);
+  }, [clearClosed]);
 
   return (
     <div

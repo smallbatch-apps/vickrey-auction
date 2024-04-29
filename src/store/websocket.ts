@@ -11,10 +11,10 @@ export function watchWebsockets() {
     const eventData = JSON.parse(event.data) as Snake;
     const snake = state.snakes[eventData.id];
     if (!snake) {
-      queryClient.invalidateQueries(["snakes"]);
+      queryClient.invalidateQueries({ queryKey: ["snakes"] });
     } else {
       if (eventData.stage === SnakeStage.Open) {
-        queryClient.invalidateQueries(["bids", eventData.id]);
+        queryClient.invalidateQueries({ queryKey: ["bids", eventData.id] });
       } else if (
         snake.stage === eventData.stage &&
         eventData.stage === SnakeStage.Closing
@@ -29,7 +29,7 @@ export function watchWebsockets() {
           useSnakeStore.setState({ ...state, closed: eventData.id });
         } else {
         }
-        queryClient.invalidateQueries(["snakes"]);
+        queryClient.invalidateQueries({ queryKey: ["snakes"] });
       } else {
         useSnakeStore.setState({ ...state, inVogue: eventData.id });
       }
